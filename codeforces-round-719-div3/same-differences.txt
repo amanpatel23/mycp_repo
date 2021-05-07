@@ -1,0 +1,72 @@
+    import java.io.*;
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.StringTokenizer;
+     
+    public class SameDifferences {
+     
+        public static void main(String[] args) {
+     
+            FastScanner fs = new FastScanner();
+            PrintWriter out = new PrintWriter(System.out);
+     
+            int t;
+            t = fs.nextInt();
+     
+            while (t-- > 0) {
+                int n;
+                n = fs.nextInt();
+     
+                Map<Integer, Long> diff = new HashMap<>();
+                int temp_diff;
+                for (int i = 0; i < n; i++) {
+                    temp_diff = fs.nextInt();
+                    temp_diff -= i;
+     
+                    diff.computeIfPresent(temp_diff, (key, val) -> val + 1);
+                    diff.computeIfAbsent(temp_diff, (key) -> 1L);
+                }
+     
+                long result = 0L;
+                for (Map.Entry e : diff.entrySet()) {
+                    long temp = (long) e.getValue();
+                    result += ((temp * (temp - 1)) / 2);
+                }
+     
+                out.println(result);
+            }
+            out.close();
+     
+        }
+     
+        static class FastScanner {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            StringTokenizer st = new StringTokenizer("");
+     
+            public String next() {
+                while (!st.hasMoreElements())
+                    try {
+                        st = new StringTokenizer(br.readLine());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                return st.nextToken();
+            }
+     
+            int[] readArray(int n) {
+                int[] a = new int[n];
+                for (int i = 0; i < n; i++) a[i] = nextInt();
+                return a;
+            }
+     
+            int nextInt() {
+                return Integer.parseInt(next());
+            }
+     
+            Long nextLong() {
+                return Long.parseLong(next());
+            }
+        }
+     
+        public static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
+    }
